@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module'
 import { FileModule } from './file/file.module'
 import { NewModule } from './new/new.module'
 import { UserModule } from './user/user.module'
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UserModule } from './user/user.module'
     UserModule,
     NewModule,
     FileModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

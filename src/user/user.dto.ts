@@ -20,3 +20,7 @@ export class UserDto {
   @IsString()
   password: string
 }
+
+// export class BuySubscriptionDto {
+//   subscriptionType: SubscriptionType
+// }
