@@ -79,7 +79,7 @@ export class UserService {
   async adminChecker(userId: string, block: boolean) {
     const { role } = await this.getById(userId)
 
-    if (role !== 'admin') {
+    if (role !== 'ADMIN') {
       if (block) {
         throw new UnauthorizedException('Permission denied')
       }
