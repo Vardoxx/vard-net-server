@@ -35,10 +35,11 @@ export class UserController {
   @Put()
   @UseInterceptors(FileInterceptor('avatar'))
   async updateProfile(
+    @CurrentUser('avatar') avatar: string | null,
     @CurrentUser('id') id: string,
     @UploadedFile() img,
     @Body() dto: UserDto,
   ) {
-    return this.userService.update(id, img, dto)
+    return this.userService.update(id, img, avatar, dto)
   }
 }

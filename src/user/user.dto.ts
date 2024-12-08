@@ -7,8 +7,6 @@ export class UserDto {
   @IsOptional()
   email: string
 
-  @ApiProperty()
-  @IsEmail()
   @IsOptional()
   avatar: string
 

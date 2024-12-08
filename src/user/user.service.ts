@@ -51,17 +51,27 @@ export class UserService {
     })
   }
 
-  async update(id: string, img: Express.Multer.File, dto: UserDto) {
+  async update(
+    id: string,
+    img: Express.Multer.File | null,
+    currentAvatar: string | null,
+    dto: UserDto,
+  ) {
     const { avatar } = await this.getById(id)
 
-    if (avatar) await this.fileService.deleteFile(avatar)
+    let data: Partial<UserDto> = {}
 
-    const imgUrl = await this.fileService.createFile(img)
-
-    let data = { ...dto, avatar: imgUrl }
+    if (img) {
+      if (avatar) await this.fileService.deleteFile(avatar)
+      const imgUrl = await this.fileService.createFile(img)
+      data = { ...dto, avatar: imgUrl }
+    } else {
+      // Если нет нового изображения, используем текущий аватар без изменений
+      data = { ...dto, avatar: currentAvatar || avatar }
+    }
 
     if (dto.password) {
-      data = { ...dto, password: await hash(dto.password) }
+      data = { ...data, password: await hash(dto.password) }
     }
 
     return this.prisma.user.update({

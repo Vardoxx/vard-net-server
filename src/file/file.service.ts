@@ -5,7 +5,7 @@ import * as uuid from 'uuid'
 
 @Injectable()
 export class FileService {
-  async createFile(file) {
+  async createFile(file: Express.Multer.File) {
     if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
       console.log(file)
       throw new BadRequestException('JPG or PNG only')
