@@ -13,28 +13,46 @@ export class NewService {
   ) {}
 
   async getAll(id: string) {
-    const newsItems = await this.prismaService.new.findMany({
+    return this.prismaService.new.findMany({
       where: {
         id,
       },
-      include: {
-        author: true,
+    })
+  }
+
+  async getByTag(tag: string) {
+    const news = await this.prismaService.new.findMany({
+      where: {
+        tag: {
+          has: tag,
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     })
 
-    const newsItemsWithUpdatedAuthors = await Promise.all(
-      newsItems.map(async (e) => {
-        return {
-          ...e,
-          author: {
-            name: e.author.name,
-            avatar: e.author.avatar,
-          },
-        }
-      }),
-    )
+    if (!news.length) return []
 
-    return newsItemsWithUpdatedAuthors
+    return news
+  }
+
+  async getByTitle(title: string) {
+    const news = await this.prismaService.new.findMany({
+      where: {
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
+
+    if (!news.length) return []
+
+    return news
   }
 
   async getById(id: string) {

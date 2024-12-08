@@ -28,6 +28,16 @@ export class NewController {
     return this.newService.getAll(id)
   }
 
+  @Get('by-tag/:tag')
+  async getByTag(@Param('tag') tag: string) {
+    return this.newService.getByTag(tag)
+  }
+
+  @Get('by-title/:title')
+  async getByTitle(@Param('title') title: string) {
+    return this.newService.getByTitle(title)
+  }
+
   @Get(':id')
   async getById(@Param('id') id: string) {
     return this.newService.getById(id)

@@ -25,6 +25,7 @@ model User {
 
   subscription SubscriptionType @default(JUNIOR)
 
+  @@unique([id, name, avatar])
   @@map("user")
 }
 
@@ -40,8 +41,11 @@ model New {
 
   checkStatus CheckStatus @default(PROCESSED)
 
-  author   User?   @relation(fields: [authorId], references: [id])
-  authorId String?
+  author User? @relation(fields: [authorId, authorName, authorAvatar], references: [id, name, avatar])
+
+  authorId     String?
+  authorName   String?
+  authorAvatar String?
 
   @@map("new")
 }
